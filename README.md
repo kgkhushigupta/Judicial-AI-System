@@ -195,9 +195,6 @@ This system is designed to support judicial analysis and should be used responsi
 - Predictions should inform, not replace, human judgment
 - Transparency and explainability are paramount
 
-## 📞 Support
-
-For questions or issues, please open a GitHub issue or contact the development team.
 
 ## 🙏 Acknowledgments
 
