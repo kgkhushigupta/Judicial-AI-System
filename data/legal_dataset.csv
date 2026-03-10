@@ -1,0 +1,10 @@
+law_id,section,description,category,question,answer
+CONST_14,Article 14,Equality before law,Constitutional,Article 14,Equality before law
+CONST_21,Article 21,Protection of life,Constitutional,Article 21,Protection of life
+CONST_25,Article 25,Right to property,Constitutional,Article 25,Right to property
+CRPC_41,Section 41,Arrest without warrant,Procedure,Section 41,Arrest without warrant
+CRPC_161,Section 161,Examination by police,Procedure,Section 161,Examination by police
+CRPC_167,Section 167,IPC enquiry,Procedure,Section 167,IPC enquiry
+IPC_302,Section 302,Murder,Criminal,Section 302,Murder
+IPC_420,Section 420,Cheating & Fraud,Criminal,Section 420,Cheating & Fraud
+IPC_498A,Section 498A,Cruelty to spouse,Criminal,Section 498A,Cruelty to spouse

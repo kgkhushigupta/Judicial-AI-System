@@ -1,0 +1,82 @@
+---
+# Judicial AI System Configuration
+
+# Data Paths
+data:
+  raw_pdfs: "data/raw_pdfs"
+  extracted_text: "data/extracted_text"
+  processed_cases: "data/processed_cases"
+  embeddings: "data/embeddings"
+  faiss_index: "data/faiss_index"
+
+# PDF Extraction
+pdf_extraction:
+  tika_server_url: "http://localhost:9998"
+  batch_size: 10
+  timeout: 300
+
+# Text Processing
+text_processing:
+  normalize_case: true
+  remove_special_chars: true
+  remove_stopwords: true
+  min_text_length: 50
+
+# NLP Models
+nlp:
+  spacy_model: "en_core_web_sm"
+  bert_model: "bert-base-uncased"
+  max_sequence_length: 512
+
+# Embeddings
+embeddings:
+  model: "bert-base-uncased"
+  dimension: 768
+  batch_size: 32
+
+# FAISS
+similarity_search:
+  index_type: "flat"
+  metric: "l2"
+  k_neighbors: 5
+
+# Neo4j
+neo4j:
+  uri: "bolt://localhost:7687"
+  username: "neo4j"
+  password: "password"
+  database: "neo4j"
+
+# Machine Learning
+ml:
+  random_seed: 42
+  train_test_split: 0.8
+  model_type: "random_forest"
+  n_estimators: 100
+
+# Bias Detection
+bias_detection:
+  enabled: true
+  analysis_types:
+    - demographic
+    - temporal
+    - procedural
+  confidence_threshold: 0.7
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  log_file: "logs/pipeline_logs/judicial_ai.log"
+
+# API Settings
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+
+# Dashboard
+dashboard:
+  streamlit:
+    port: 8501
+    theme: "light"
