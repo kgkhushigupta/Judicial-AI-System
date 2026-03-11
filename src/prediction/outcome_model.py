@@ -121,4 +121,34 @@ class OutcomePredictor:
 
 
 if __name__ == "__main__":
+
+    print("Testing Outcome Prediction Model...\n")
+
+    # Create sample training data
+    X_train = np.random.rand(100, 10)   # 100 cases, 10 features
+    y_train = np.random.randint(0, 2, 100)  # Binary outcomes
+
+    # X_train = np.random.rand(100, 10)
+    # # create a rule-based label
+    # y_train = (X_train[:,0] + X_train[:,1] > 1).astype(int)
+
     predictor = OutcomePredictor()
+
+    # Train model
+    success = predictor.train_model(X_train, y_train)
+
+    if success:
+        print("Model trained successfully")
+
+        # Test prediction
+        test_case = np.random.rand(10)
+
+        result = predictor.predict(test_case)
+
+        print("\nPrediction Result:")
+        print("Outcome:", result["outcome"])
+        print("Confidence:", result["confidence"])
+        print("Probabilities:", result["probabilities"])
+
+    else:
+        print("Model training failed")

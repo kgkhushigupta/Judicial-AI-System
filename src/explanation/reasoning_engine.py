@@ -101,4 +101,34 @@ class ReasoningEngine:
 
 
 if __name__ == "__main__":
+
+    print("Testing Reasoning Engine...\n")
+
     engine = ReasoningEngine()
+
+    prediction_result = {
+        "outcome": "Conviction",
+        "confidence": 0.81
+    }
+
+    similar_cases = ["CASE_5", "CASE_7", "CASE_10"]
+
+    bias_result = {
+        "demographic_analysis": {"bias_score": 0.12},
+        "temporal_analysis": {"temporal_bias_score": 0.05}
+    }
+
+    print("----- Prediction Explanation -----")
+    print(engine.explain_prediction(prediction_result, similar_cases))
+
+    print("\n----- Similarity Explanation -----")
+    similar_case_details = [
+        {"case_id": "CASE_5", "similarity_score": 0.92},
+        {"case_id": "CASE_7", "similarity_score": 0.88},
+        {"case_id": "CASE_10", "similarity_score": 0.85},
+    ]
+
+    print(engine.explain_similarity("CASE_2", similar_case_details))
+
+    print("\n----- Bias Explanation -----")
+    print(engine.explain_bias(bias_result))

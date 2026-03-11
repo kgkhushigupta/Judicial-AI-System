@@ -1,204 +1,361 @@
 # Judicial AI System
 
-An advanced AI-powered system for analyzing court judgments, predicting case outcomes, detecting biases, and generating explainable insights.
+**AI-Powered Legal Case Intelligence Platform**
 
-## 🎯 Features
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Neo4j](https://img.shields.io/badge/Neo4j-5.0+-brightgreen.svg)](https://neo4j.com/)
 
-- **PDF Document Ingestion**: Extract text from court judgment PDFs using Apache Tika
-- **Text Processing**: Clean, normalize, and preprocess legal documents at scale using Spark
-- **NLP Analysis**: 
-  - Detect and extract document sections (facts, issues, reasoning, etc.)
-  - Extract named entities (judges, parties, laws)
-  - Identify and cluster keywords
-- **Semantic Search**: Find similar cases using FAISS vector similarity search with BERT embeddings
-- **Knowledge Graph**: Build and query relationships between cases using Neo4j
-- **Case Outcome Prediction**: Machine learning models to predict case outcomes
-- **Bias Detection**: Identify demographic, temporal, and procedural biases
-- **Explainable AI**: Generate human-readable explanations for predictions
-- **Dashboard**: Interactive Streamlit dashboard for case analysis and exploration
+---
 
-## 📁 Project Structure
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [System Architecture](#system-architecture)
+- [Workflow](#workflow)
+- [Technologies](#technologies)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Goals & Roadmap](#goals--roadmap)
+
+---
+
+## Overview
+
+
+
+
+
+
+
+The Judicial AI System is an intelligent platform designed to assist legal professionals by using AI, machine learning, and knowledge graphs to analyze legal cases. It demonstrates how AI can support the judicial decision process and accelerate legal research workflows.
+
+---
+
+## Features
+
+- **Retrieve Similar Legal Cases** - Identify precedent cases with similar patterns using FAISS
+- **Predict Case Outcomes** - Forecast judicial decisions using machine learning models
+- **Generate Explainable Reasoning** - Provide transparent, interpretable AI explanations
+- **Detect Bias in Decisions** - Identify potential demographic, regional, and procedural bias patterns
+- **Visualize Legal Relationships** - Store and query case relationships in an interactive knowledge graph
+
+---
+
+## System Architecture
+
+The system processes legal cases through a multi-stage pipeline:
+
+```
+Case Input
+    ↓
+NLP Embeddings (Text to Vectors)
+    ↓
+Similarity Search (FAISS)
+    ↓
+Outcome Prediction (Random Forest)
+    ↓
+Bias Detection Analysis
+    ↓
+Explainable AI Reasoning
+    ↓
+Knowledge Graph (Neo4j)
+    ↓
+Dashboard UI
+```
+
+---
+
+## Workflow
+
+### Stage 1: Case Input
+Users submit legal case descriptions including:
+- Legal arguments and evidence details
+- Court jurisdiction and parties involved
+- Case background and relevant precedents
+
+### Stage 2: NLP Case Embedding
+Legal text is converted into numerical vectors for semantic analysis.
+
+**Tools:** Python, NumPy, Advanced NLP techniques
+**Module:** `src/embeddings/case_embeddings.py`
+
+### Stage 3: Similar Case Retrieval
+The system locates previous cases with comparable patterns using FAISS (Facebook AI Similarity Search).
+
+**Why FAISS?**
+- Extremely fast similarity search across large datasets
+- Scalable architecture for enterprise legal databases
+- Efficient vector-based semantic matching
+
+**Modules:**
+- `src/similarity/faiss_index.py`
+- `src/similarity/similarity_search.py`
+
+**Example Results:**
+
+
+| Case ID | Court | Year | Similarity |
+|---------|-------|------|------------|
+| TX-2022-991A | Superior Court, Austin | 2022 | 94% |
+| FL-2019-382C | District Court, Miami | 2019 | 89% |
+| NY-2024-011X | Supreme Court, Albany | 2024 | 81% |
+
+### Stage 4: Outcome Prediction
+Predicts likely verdicts based on historical case patterns using Random Forest classification.
+
+**Algorithm:** Random Forest Classifier
+**Advantages:**
+- Handles complex legal patterns and non-linear relationships
+- Robust to noisy and incomplete data
+- Provides feature importance for interpretability
+
+**Module:** `src/prediction/outcome_model.py`
+
+**Example Output:**
+```
+Predicted Verdict: Guilty
+Confidence Score: 88%
+Legal Risk Level: Moderate
+```
+
+### Stage 5: Bias Detection
+Analyzes judicial decisions to identify systemic bias patterns in case outcomes.
+
+**Types of Bias Detected:**
+- Demographic bias (gender, age, race)
+- Regional bias (geographic disparities)
+- Temporal bias (historical trends)
+- Procedural bias (case handling variations)
+
+**Module:** `src/bias_detection/bias_detector.py`
+
+**Example Analysis:**
+
+
+| Bias Type | Detection Score |
+|-----------|-----------------|
+| Regional Bias | 12% |
+| Gender Bias | 4% |
+| Court Bias | 48% |
+
+### Stage 6: Explainable AI (Reasoning Engine)
+Generates clear, interpretable explanations for all predictions rather than black-box outputs.
+
+**Example Explanation:**
+> The predicted outcome is **Guilty** because similar precedent cases TX-2022-991A and FL-2019-382C involved breach of warranty violations with comparable evidence strength.
+
+**Module:** `src/explanation/reasoning_engine.py`
+
+### Stage 7: Knowledge Graph (Neo4j)
+Stores legal case relationships and facts in a queryable graph database for pattern discovery.
+
+**Relationship Types:**
+- `SIMILAR_TO` - Cases with comparable legal issues
+- `DECIDED_IN` - Court and jurisdiction associations
+- `CITES` - Precedent relationships
+- `INVOLVES` - Party and legal subject matter connections
+
+**Example Query:**
+```cypher
+MATCH (a:Case)-[r:SIMILAR_TO]->(b:Case)
+WHERE a.caseId = 'TX-2022-991A'
+RETURN a, r, b
+LIMIT 10
+```
+
+**Module:** `src/knowledge_graph/neo4j_loader.py`
+
+### Stage 8: Dashboard Interface
+User-facing web interface for case analysis and visualization.
+
+**Features:**
+- Case input form and management
+- Similarity results table with filtering
+- Outcome prediction display with confidence scores
+- Bias analysis dashboard with visualizations
+- Explainable reasoning display
+- Knowledge graph visualization
+
+**Technologies:**
+- HTML - Semantic markup
+- TailwindCSS - Modern responsive styling
+- JavaScript - Interactive components
+
+**File:** `code.html`
+
+---
+
+## Technologies
+
+| Category | Tools |
+|----------|-------|
+| Programming | Python 3.8+ |
+| Machine Learning | Scikit-learn, Random Forest |
+| Numerical Computing | NumPy, Pandas |
+| Similarity Search | FAISS (Facebook AI) |
+| Graph Database | Neo4j 5.0+ |
+| Backend Framework | Flask |
+| Frontend | HTML5, TailwindCSS, JavaScript |
+
+---
+
+## Project Structure
 
 ```
 Judicial-AI-System/
-├── data/
-│   ├── raw_pdfs/              # Original court judgment PDFs
-│   ├── extracted_text/        # Text extracted from PDFs
-│   ├── processed_cases/       # Cleaned case data
-│   ├── embeddings/            # BERT embeddings
-│   └── faiss_index/           # Vector search index
 ├── src/
-│   ├── ingestion/             # PDF extraction
-│   ├── preprocessing/         # Text cleaning and Spark processing
-│   ├── nlp/                   # NLP tasks (sections, entities, keywords)
-│   ├── clustering/            # Case clustering
-│   ├── embeddings/            # Case embeddings
-│   ├── similarity/            # Similarity search
-│   ├── knowledge_graph/       # Neo4j integration
-│   ├── prediction/            # Outcome prediction
-│   ├── bias_detection/        # Bias analysis
-│   └── explanation/           # Explainable AI
-├── dashboard/                 # Streamlit web interface
-├── notebooks/                 # Jupyter notebooks for experiments
-├── config/                    # Configuration files
-├── models/trained_models/     # Trained ML models
-├── logs/pipeline_logs/        # Application logs
-├── requirements.txt           # Python dependencies
-└── README.md                  # This file
+│   ├── embeddings/
+│   │   └── case_embeddings.py
+│   ├── similarity/
+│   │   ├── faiss_index.py
+│   │   └── similarity_search.py
+│   ├── prediction/
+│   │   └── outcome_model.py
+│   ├── bias_detection/
+│   │   └── bias_detector.py
+│   ├── explanation/
+│   │   └── reasoning_engine.py
+│   ├── knowledge_graph/
+│   │   ├── neo4j_loader.py
+│   │   ├── graph_queries.py
+│   │   └── load_dataset_to_neo4j.py
+│   ├── nlp/
+│   │   ├── entity_extractor.py
+│   │   ├── keyword_extractor.py
+│   │   └── section_detector.py
+│   ├── clustering/
+│   │   └── keyword_clustering.py
+│   ├── preprocessing/
+│   │   ├── text_cleaning.py
+│   │   ├── spark_preprocessing.py
+│   │   └── test_cleaning.py
+│   ├── ingestion/
+│   │   └── pdf_extractor.py
+│   └── run_pipeline.py
+├── dashboard/
+│   └── app.py
+├── data/
+│   └── legal_dataset.csv
+├── config/
+│   └── config.yaml
+├── code.html
+├── run_demo.py
+├── requirements.txt
+├── QUICKSTART.md
+└── README.md
 ```
 
-## 🚀 Getting Started
+---
+
+## Installation
 
 ### Prerequisites
+- Python 3.8 or higher
+- Neo4j 5.0 or higher
+- pip package manager
 
-- Python 3.8+
-- Apache Tika server (for PDF extraction)
-- Neo4j database (for knowledge graph)
-- FAISS (for similarity search)
-
-### Installation
+### Setup Steps
 
 1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd Judicial-AI-System
+   ```
+
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Configure Neo4j connection:
+   - Edit `config/config.yaml`
+   - Set your Neo4j server URI, username, and password
+
+4. Load initial dataset:
+   ```bash
+   python src/knowledge_graph/load_dataset_to_neo4j.py
+   ```
+
+---
+
+## Usage
+
+### Run the Complete Demo
+
+Execute the full pipeline:
 ```bash
-git clone <repository-url>
-cd Judicial-AI-System
+python run_demo.py
 ```
 
-2. Create a virtual environment:
+This will:
+- Initialize all AI modules
+- Process sample legal cases
+- Generate outcome predictions
+- Perform bias detection analysis
+- Populate the knowledge graph
+- Display results in console
+
+### Launch the Dashboard
+
+Open the web interface:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Simply open in your browser
+code.html
 ```
 
-3. Install dependencies:
+Or serve with a local server:
 ```bash
-pip install -r requirements.txt
+python -m http.server 8000
 ```
 
-4. Download spaCy model:
-```bash
-python -m spacy download en_core_web_sm
-```
+Then navigate to `http://localhost:8000/code.html`
 
-### Configuration
-
-Edit `config/config.yaml` to set up:
-- PDF extraction paths
-- Neo4j connection details
-- FAISS index settings
-- ML model parameters
-- Logging configuration
-
-### Running the Dashboard
+### Run Individual Components
 
 ```bash
-streamlit run dashboard/app.py
+# Text processing
+python -m src.nlp.entity_extractor
+
+# Similarity search
+python -m src.similarity.similarity_search
+
+# Knowledge graph queries
+python -m src.knowledge_graph.graph_queries
 ```
 
-The dashboard will be available at `http://localhost:8501`
+---
 
-## 📊 Workflow
+## Goals & Roadmap
 
-1. **Data Ingestion**: Place PDFs in `data/raw_pdfs/`
-2. **Text Extraction**: Run PDF extraction pipeline
-3. **Preprocessing**: Clean and normalize text
-4. **NLP Analysis**: Extract sections, entities, and keywords
-5. **Embedding Generation**: Create BERT embeddings
-6. **Indexing**: Build FAISS index for similarity search
-7. **Knowledge Graph**: Load case relationships into Neo4j
-8. **Analysis**: Run prediction, bias detection, and similarity search
-9. **Visualization**: Explore results in dashboard
+### Current Objectives
+- Accelerate legal research and case discovery
+- Identify relevant precedent cases efficiently
+- Predict judicial outcomes with interpretability
+- Improve transparency through explainable AI
+- Detect and highlight systemic bias in judicial decisions
 
-## 🔍 Main Modules
+### Future Enhancements
+- Legal-BERT embeddings for domain-specific NLP improvements
+- Deep learning models (LSTM, Transformers) for prediction
+- Full backend-frontend integration with real-time updates
+- Neo4j graph visualization with interactive exploration
+- Support for large-scale legal datasets (millions of cases)
+- Multi-language support for international legal systems
+- Integration with legal document scanning and OCR
 
-### Ingestion (`src/ingestion/`)
-- `pdf_extractor.py`: Extract text from PDF documents
+---
 
-### Preprocessing (`src/preprocessing/`)
-- `spark_preprocessing.py`: Distributed text processing
-- `text_cleaning.py`: Text normalization and cleaning
+## Contributing
 
-### NLP (`src/nlp/`)
-- `section_detector.py`: Identify document sections
-- `entity_extractor.py`: Extract entities (persons, laws, dates)
-- `keyword_extractor.py`: Extract important keywords
+Contributions are welcome! Please feel free to submit issues and pull requests.
 
-### Similarity & Embeddings
-- `embeddings/case_embeddings.py`: Generate BERT embeddings
-- `similarity/faiss_index.py`: Vector index management
-- `similarity/similarity_search.py`: Semantic similarity search
+## License
 
-### Analytics
-- `prediction/outcome_model.py`: Case outcome prediction
-- `bias_detection/bias_detector.py`: Detect biases
-- `explanation/reasoning_engine.py`: Generate explanations
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### Knowledge Graph
-- `knowledge_graph/neo4j_loader.py`: Load data to Neo4j
-- `knowledge_graph/graph_queries.py`: Query the graph
+## Contact
 
-## 🛠️ Technology Stack
-
-- **Data Processing**: Pandas, PySpark, Apache Tika
-- **NLP**: Transformers, spaCy, BERT
-- **Machine Learning**: scikit-learn, PyTorch
-- **Vector Search**: FAISS
-- **Graph Database**: Neo4j
-- **Web Framework**: FastAPI, Streamlit
-- **Data Management**: Python, YAML
-
-## 📝 Example Usage
-
-```python
-from src.ingestion.pdf_extractor import PDFExtractor
-from src.preprocessing.text_cleaning import TextCleaner
-from src.embeddings.case_embeddings import CaseEmbedder
-from src.similarity.similarity_search import SimilaritySearch
-
-# Extract PDF
-extractor = PDFExtractor()
-text = extractor.extract_text("case.pdf")
-
-# Clean text
-cleaner = TextCleaner()
-cleaned_text = cleaner.clean_text(text)
-
-# Generate embedding
-embedder = CaseEmbedder()
-embedding = embedder.embed_text(cleaned_text)
-
-# Search similar cases
-search = SimilaritySearch(embedder, faiss_index)
-similar_cases = search.find_similar_cases(cleaned_text, k=5)
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see LICENSE file for details.
-
-## ⚠️ Ethical Considerations
-
-This system is designed to support judicial analysis and should be used responsibly:
-
-- Results should be reviewed by legal professionals
-- Bias detection is not a replacement for legal oversight
-- Predictions should inform, not replace, human judgment
-- Transparency and explainability are paramount
-
-
-## 🙏 Acknowledgments
-
-- Built with BERT embeddings from Hugging Face
-- Vector search powered by Facebook FAISS
-- Graph capabilities via Neo4j
-- Web interface using Streamlit
+For questions or support, please open an issue on the project repository.

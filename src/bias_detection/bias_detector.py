@@ -23,27 +23,38 @@ class BiasDetector:
         logger.info("BiasDetector initialized")
     
     def detect_demographic_bias(self, cases: List[Dict]) -> Dict:
-        """
-        Detect demographic bias in case outcomes.
-        
-        Args:
-            cases: List of case records with demographics
-            
-        Returns:
-            Dictionary with bias indicators
-        """
+
+        if len(cases) == 0:
+            return {}
+
         try:
-            # Analyze outcome distribution by demographics
-            bias_score = 0.0
-            analysis = {
-                'total_cases': len(cases),
-                'demographic_disparities': [],
-                'bias_score': bias_score
-            }
-            
-            logger.info("Demographic bias analysis completed")
-            return analysis
+
+            regions = {}
         
+            for case in cases:
+                region = case.get("region")
+                outcome = case.get("outcome")
+
+                if region not in regions:
+                    regions[region] = []
+
+                regions[region].append(outcome)
+
+            disparities = {}
+
+            for region, outcomes in regions.items():
+                disparities[region] = sum(outcomes) / len(outcomes)
+
+            bias_score = max(disparities.values()) - min(disparities.values())
+
+            analysis = {
+                "total_cases": len(cases),
+                "demographic_disparities": disparities,
+                "bias_score": bias_score
+            }
+
+            return analysis
+
         except Exception as e:
             logger.error(f"Error detecting demographic bias: {str(e)}")
             return {}
@@ -116,4 +127,21 @@ class BiasDetector:
 
 
 if __name__ == "__main__":
+
+    print("Testing Bias Detector...\n")
+
+    sample_cases = [
+        {"region": "A", "outcome": 1},
+        {"region": "A", "outcome": 1},
+        {"region": "A", "outcome": 0},
+        {"region": "B", "outcome": 0},
+        {"region": "B", "outcome": 0},
+        {"region": "B", "outcome": 1},
+    ]
+
     detector = BiasDetector()
+
+    report = detector.generate_bias_report(sample_cases)
+
+    print("Bias Report:\n")
+    print(report)
