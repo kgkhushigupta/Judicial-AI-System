@@ -73,4 +73,17 @@ class KeywordClusterer:
 
 
 if __name__ == "__main__":
-    clusterer = KeywordClusterer()
+    print("Testing Keyword Clustering...")
+
+    # Create dummy case embeddings (10 cases, 5 features each)
+    dummy_vectors = np.random.rand(10, 5)
+
+    clusterer = KeywordClusterer(n_clusters=3)
+
+    labels = clusterer.cluster_cases(dummy_vectors)
+
+    print("Cluster Labels:")
+    print(labels)
+
+    print("Cluster Centers:")
+    print(clusterer.get_cluster_centers())

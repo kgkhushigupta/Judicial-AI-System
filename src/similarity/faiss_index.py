@@ -128,4 +128,27 @@ class FAISSIndex:
 
 
 if __name__ == "__main__":
-    index = FAISSIndex()
+
+    print("Testing FAISS Index...")
+
+    # Create FAISS index
+    index = FAISSIndex(dimension=768)
+
+    # Create dummy embeddings (10 vectors of size 768)
+    vectors = np.random.rand(10, 768)
+
+    # Add vectors to index
+    index.add_vectors(vectors)
+
+
+    print("Vectors added to index")
+
+    # Create a query vector
+    query = np.random.rand(768)
+
+    # Search for similar vectors
+    distances, indices = index.search(query, k=3)
+
+    print("Search Results")
+    print("Indices:", indices)
+    print("Distances:", distances)

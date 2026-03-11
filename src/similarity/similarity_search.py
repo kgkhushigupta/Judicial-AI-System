@@ -97,7 +97,48 @@ class SimilaritySearch:
             logger.error(f"Error searching similar cases: {str(e)}")
             return []
 
-
 if __name__ == "__main__":
-    # Usage example would go here
-    pass
+
+    print("Testing Similarity Search System...\n")
+
+    # Import required modules
+    from src.embeddings.case_embeddings import CaseEmbedder
+    from src.similarity.faiss_index import FAISSIndex
+
+    # Initialize components
+    embedder = CaseEmbedder()
+    faiss_index = FAISSIndex(dimension=768)
+
+    search_engine = SimilaritySearch(embedder, faiss_index)
+
+    # Sample legal cases
+    cases = {
+        "C1": "The accused committed fraud under IPC section 420.",
+        "C2": "This case involves breach of contract between two companies.",
+        "C3": "The defendant was charged with financial fraud and cheating.",
+        "C4": "Dispute regarding property ownership and inheritance law.",
+        "C5": "Criminal charges for fraudulent financial transactions."
+    }
+
+    # Index the cases
+    print("Indexing cases...")
+    for case_id, text in cases.items():
+        search_engine.index_case(case_id, text)
+
+    print("Cases indexed successfully.\n")
+
+    # Query
+    query = "Fraud under IPC law"
+
+    print("Query:", query)
+    print("\nSearching for similar cases...\n")
+
+    results = search_engine.find_similar_cases(query, k=3)
+
+    # Print results
+    for i, result in enumerate(results, 1):
+        print(f"Result {i}")
+        print("Index Position:", result["index_position"])
+        print("Distance:", result["distance"])
+        print("Similarity Score:", result["similarity_score"])
+        print()
