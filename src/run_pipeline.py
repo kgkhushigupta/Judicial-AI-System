@@ -30,7 +30,7 @@ try:
     # ====================================================================
     print("\n[1/6] Loading dataset...")
     
-    DATA_PATH = r"D:\bigdata\Judicial-AI-System\data\legal_dataset.csv"
+    DATA_PATH = r"C:\Users\ngoya\big data project\Judicial-AI-System\data\legal_dataset.csv"
     
     if not os.path.exists(DATA_PATH):
         raise FileNotFoundError(f"Dataset not found: {DATA_PATH}")
